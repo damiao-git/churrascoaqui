@@ -6,6 +6,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "churrascos")
@@ -16,5 +19,13 @@ public class Churrasco {
     private Long id;
     private String local;
     private Date data;
+
+    @ManyToMany
+    @JoinTable(
+            name = "churrasco_pessoa",
+            joinColumns = @JoinColumn(name = "churrasco_id"),
+            inverseJoinColumns = @JoinColumn(name = "pessoa_id")
+    )
+    private Set<Pessoa> pessoas = new HashSet<Pessoa>();
 
 }

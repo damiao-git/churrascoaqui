@@ -2,9 +2,11 @@ package com.churrascoaqui.app.controller;
 
 import com.churrascoaqui.app.entity.Churrasco;
 import com.churrascoaqui.app.entity.ChurrascoDTO;
+import com.churrascoaqui.app.entity.ViaCepResponseDTO;
 import com.churrascoaqui.app.exception.GlobalExceptionHandler;
 import com.churrascoaqui.app.exception.NotFoundException;
 import com.churrascoaqui.app.service.ChurrascoService;
+import com.churrascoaqui.app.service.ViaCepService;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,9 @@ public class ChurrascoController {
 
     @Autowired
     private ChurrascoService churrascoService;
+
+    @Autowired
+    private ViaCepService cepService;
 
     @GetMapping
     @SneakyThrows
@@ -84,6 +89,11 @@ public class ChurrascoController {
         catch (Exception e) {
             throw new GlobalExceptionHandler();
         }
+    }
+
+    @GetMapping("teste")
+    public ResponseEntity<?> testecep(@RequestBody ViaCepResponseDTO dto){
+        return ResponseEntity.ok(cepService.verificarCep(dto.getCep()));
     }
 
 }
