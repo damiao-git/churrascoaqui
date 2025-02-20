@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -42,7 +43,7 @@ public class PessoaController {
 
     @PostMapping
     @SneakyThrows
-    public ResponseEntity<Pessoa> salvar(@RequestBody PessoaDTO pessoaDTO){
+    public ResponseEntity<Pessoa> salvar(@RequestBody @Valid PessoaDTO pessoaDTO){
         try{
             return ResponseEntity.status(HttpStatus.OK).body(pessoaService.salvar(pessoaDTO));
         } catch (Exception e) {

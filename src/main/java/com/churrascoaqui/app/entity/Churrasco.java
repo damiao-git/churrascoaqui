@@ -1,5 +1,7 @@
 package com.churrascoaqui.app.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,12 +22,13 @@ public class Churrasco {
     private String local;
     private Date data;
 
-    @ManyToMany
+
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "churrasco_pessoa",
             joinColumns = @JoinColumn(name = "churrasco_id"),
             inverseJoinColumns = @JoinColumn(name = "pessoa_id")
     )
-    private Set<Pessoa> pessoas = new HashSet<Pessoa>();
+    private List<Pessoa> pessoas;
 
 }

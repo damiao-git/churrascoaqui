@@ -16,7 +16,7 @@ public class PessoaDTO {
     private String nome;
 
     @NotNull(message = "Preencha a data de nascimento")
-    private Date dataNascomento;
+    private Date dataNascimento;
 
     @NotBlank(message = "Preencha o CPF")
     @NotNull(message = "O CPF não pode ser nulo")

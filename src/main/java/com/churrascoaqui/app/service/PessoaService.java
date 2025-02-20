@@ -26,7 +26,7 @@ public class PessoaService {
         Pessoa novaPessoa = new Pessoa();
         novaPessoa.setCpf(pessoaDTO.getCpf());
         novaPessoa.setNome(pessoaDTO.getNome());
-        novaPessoa.setDataNascimento(pessoaDTO.getDataNascomento());
+        novaPessoa.setDataNascimento(pessoaDTO.getDataNascimento());
         return pessoaRepository.save(novaPessoa);
     }
 
@@ -34,7 +34,7 @@ public class PessoaService {
         Pessoa pessoaEncontrada = pessoaRepository.findById(id).orElseThrow(() -> new NotFoundException("Pessoa não encontrada"));
         pessoaEncontrada.setCpf(pessoaDTO.getCpf());
         pessoaEncontrada.setNome(pessoaDTO.getNome());
-        pessoaEncontrada.setDataNascimento(pessoaDTO.getDataNascomento());
+        pessoaEncontrada.setDataNascimento(pessoaDTO.getDataNascimento());
 
         return pessoaRepository.save(pessoaEncontrada);
     }

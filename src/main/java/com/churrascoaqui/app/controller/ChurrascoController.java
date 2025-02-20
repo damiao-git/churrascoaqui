@@ -1,5 +1,6 @@
 package com.churrascoaqui.app.controller;
 
+import com.churrascoaqui.app.entity.AdicionarPessoaChurrasco;
 import com.churrascoaqui.app.entity.Churrasco;
 import com.churrascoaqui.app.entity.ChurrascoDTO;
 import com.churrascoaqui.app.entity.ViaCepResponseDTO;
@@ -94,6 +95,12 @@ public class ChurrascoController {
     @GetMapping("teste")
     public ResponseEntity<?> testecep(@RequestBody ViaCepResponseDTO dto){
         return ResponseEntity.ok(cepService.verificarCep(dto.getCep()));
+    }
+
+    @PostMapping("adicionarPessoaChurrasco")
+    public ResponseEntity<?> adicionarPessoaChurrasco(@RequestBody AdicionarPessoaChurrasco dto){
+        churrascoService.adicionarPessoaChurrasco(dto.getPessoaId(), dto.getChurrascoId());
+        return ResponseEntity.status(HttpStatus.OK).body("Pessoa adicionada ao churrasco");
     }
 
 }

@@ -1,5 +1,7 @@
 package com.churrascoaqui.app.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -21,5 +23,6 @@ public class Pessoa {
     @ManyToMany(
             mappedBy = "pessoas"
     )
+    @JsonIgnore
     private Set<Churrasco> churrascos = new HashSet<Churrasco>();
 }
