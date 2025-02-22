@@ -1,21 +1,23 @@
 package com.churrascoaqui.app.controller;
 
-import com.churrascoaqui.app.entity.AdicionarPessoaChurrasco;
-import com.churrascoaqui.app.entity.Churrasco;
-import com.churrascoaqui.app.entity.ChurrascoDTO;
-import com.churrascoaqui.app.entity.ViaCepResponseDTO;
+import com.churrascoaqui.app.entity.*;
 import com.churrascoaqui.app.exception.GlobalExceptionHandler;
 import com.churrascoaqui.app.exception.NotFoundException;
 import com.churrascoaqui.app.service.ChurrascoService;
 import com.churrascoaqui.app.service.ViaCepService;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -51,6 +53,37 @@ public class ChurrascoController {
         catch (Exception e){
             throw new GlobalExceptionHandler();
         }
+    }
+
+    @GetMapping("filtrar")
+    public List<Churrasco> filtrar(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicial,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal,
+            @RequestParam(required = false) String local) {
+
+        Date dateI = null;
+        Date dateF = null;
+        String localFormatado = "";
+
+        if (dataInicial != null) {
+            LocalDateTime inicialLocalDateTime = dataInicial.atStartOfDay();
+            dateI = Date.from(inicialLocalDateTime.atZone(ZoneId.systemDefault()).toInstant());
+        }
+
+        if (dataFinal != null) {
+            LocalDateTime finalLocalDateTime = dataFinal.atTime(23, 59, 59, 999_000_000);
+            dateF = Date.from(finalLocalDateTime.atZone(ZoneId.systemDefault()).toInstant());
+        }
+        if(local != null){
+            localFormatado = local;
+        }
+
+        FiltroDTO filtroDTO = new FiltroDTO();
+        filtroDTO.setDataInicial(dateI);
+        filtroDTO.setDataFinal(dateF);
+        filtroDTO.setLocal(localFormatado);
+
+        return churrascoService.filtrar(filtroDTO);
     }
 
     @Transactional
